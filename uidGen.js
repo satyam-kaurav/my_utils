@@ -1,5 +1,7 @@
-function nextChar(c) {
-  return String.fromCharCode(c.charCodeAt(0) + 1);
+function single_flip(main_char, lower_bound, upper_bound) {
+  return main_char === upper_bound
+    ? lower_bound
+    : String.fromCharCode(main_char.charCodeAt(0) + 1);
 }
 
 function flip_flop(uid_str) {
@@ -11,27 +13,23 @@ function flip_flop(uid_str) {
     const element = uid_arr[index];
 
     if (element >= "A" && element <= "Z") {
-      if (element < "Z") {
-        const nxt = nextChar(element);
-        uid_arr[index] = nxt;
-        break;
-      } else if (element === "Z") {
-        uid_arr[index] = "A";
+      uid_arr[index] = single_flip(element, "A", "Z");
+      if (element === "Z") {
         continue;
+      } else {
+        break;
       }
     } else if (element >= "0" && element <= "9") {
-      if (element < "9") {
-        const nxt = nextChar(element);
-        uid_arr[index] = nxt;
-        break;
-      } else if (element === "9") {
-        uid_arr[index] = "0";
+      uid_arr[index] = single_flip(element, "0", "9");
+      if (element === "9") {
         continue;
+      } else {
+        break;
       }
     }
   }
 
-  return prefix + "#" + uid_arr.join("");
+  return `${prefix}#${uid_arr.join("")}`;
 }
 
 const prev_uid = "parent#0000A9";
